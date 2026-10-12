@@ -1,0 +1,118 @@
+﻿@using System.IO
+@model Mi_portafolio_Daniela.Models.Perfil
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<!-- PORTADA -->
+<section class="hero text-white">
+    <div class="row align-items-center g-4">
+        <div class="col-md-7 order-2 order-md-1">
+            <p class="hero-hola"> Hola, soy</p>
+            <h1 class="hero-nombre">@Model.Nombre</h1>
+            <h4 class="hero-profesion">@Model.Profesion</h4>
+            <p class="hero-texto">@Model.AcercaDe</p>
+            <div class="d-flex flex-wrap gap-2 mt-4">
+                <a asp-controller="Proyectos" asp-action="Index" class="btn btn-light btn-lg">
+                    <i class="bi bi-folder2-open"></i> Ver proyectos
+                </a>
+            </div>
+        </div>
+        <div class="col-md-5 order-1 order-md-2 text-center">
+            <img src="@Model.Foto" class="hero-foto" alt="Foto de perfil" />
+        </div>
+    </div>
+</section>
+
+
+<!-- GALERÍA -->
+<section class="py-4 reveal">
+    <h2 class="titulo-seccion">Galería</h2>
+    <div class="row g-4">
+        @foreach (var img in Model.Galeria)
+        {
+            <div class="col-6 col-md-3">
+                <div class="card h-100 galeria-item text-center">
+                    <img src="@Url.Content("~/img/" + img)" class="card-img-top" alt="@img" />
+                    <div class="card-body">
+                        <small>@System.IO.Path.GetFileNameWithoutExtension(img).Replace("-", " ").Replace("_", " ")</small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+          
+</section>
+
+<!-- LO QUE HAGO -->
+<section class="py-4 reveal">
+    <h2 class="titulo-seccion">Lo que hago</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card-servicio">
+                <i class="bi bi-code-slash"></i>
+                <h5>Desarrollo web</h5>
+                <p>Aplicaciones con ASP.NET Core MVC, HTML, CSS y JavaScript.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-servicio">
+                <i class="bi bi-git"></i>
+                <h5>Control de versiones</h5>
+                <p>Trabajo con Git y GitHub para organizar y respaldar mi código.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-servicio">
+                <i class="bi bi-cloud-arrow-up"></i>
+                <h5>Despliegue en la nube</h5>
+                <p>Publicación automática con Azure DevOps y Azure App Service.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HABILIDADES -->
+<section class="py-4 reveal">
+    <h2 class="titulo-seccion">Habilidades</h2>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+        @foreach (var h in Model.Habilidades)
+        {
+            <span class="chip">@h</span>
+        }
+    </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="contacto text-center text-white my-5 reveal">
+    <h2>¿Hablamos?</h2>
+    <p class="mb-4">Estoy abierta a nuevas ideas, proyectos y oportunidades.</p>
+    <a href="mailto:@Model.Correo" class="btn btn-light btn-lg mb-4">
+        <i class="bi bi-envelope-fill"></i> @Model.Correo
+    </a>
+    <div class="d-flex justify-content-center gap-4">
+        <a href="https://github.com/garciabricenodiana-cmyk" target="_blank" class="social" title="GitHub">
+            <i class="bi bi-github"></i> 
+        </a>
+        <a href="https://www.instagram.com/TU_USUARIO" target="_blank" class="social" title="Instagram">
+            <i class="bi bi-instagram"></i>
+        </a>
+        <a href="https://wa.me/505XXXXXXXX" target="_blank" class="social" title="WhatsApp">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    observador.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => observador.observe(el));
+    </script>
+}

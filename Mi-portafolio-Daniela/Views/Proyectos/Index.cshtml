@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Mi_portafolio_Daniela.Models.Proyecto>
+@{
+    ViewData["Title"] = "Proyectos";
+}
+
+<h2 class="mb-4">Mis proyectos</h2>
+<div class="row">
+    @foreach (var p in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="@p.Imagen" class="card-img-top" alt="@p.Titulo" />
+                <div class="card-body">
+                    <h5 class="card-title">@p.Titulo</h5>
+                    <p class="card-text">@p.Descripcion</p>
+                    <small class="text-muted">@p.Tecnologias</small>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
